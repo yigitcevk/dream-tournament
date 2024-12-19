@@ -1,0 +1,20 @@
+CREATE DATABASE IF NOT EXISTS dream_tournament;
+USE dream_tournament;
+
+CREATE TABLE IF NOT EXISTS users (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    country VARCHAR(50) NOT NULL,
+    level INT DEFAULT 1,
+    coins INT DEFAULT 5000,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+
+CREATE TABLE IF NOT EXISTS tournaments (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    group_id VARCHAR(50) NOT NULL,
+    user_id BIGINT NOT NULL,
+    score INT DEFAULT 0,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );

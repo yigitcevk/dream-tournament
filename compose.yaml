@@ -1,0 +1,11 @@
+services:
+  mysql:
+    image: 'mysql:latest'
+    environment:
+      - 'MYSQL_DATABASE=dream_tournament'
+      - 'MYSQL_ROOT_PASSWORD=password'
+    ports:
+      - '3307:3306'
+    volumes:
+      - ./mysql-db-dump.sql:/docker-entrypoint-initdb.d/mysql-db-dump.sql
+
