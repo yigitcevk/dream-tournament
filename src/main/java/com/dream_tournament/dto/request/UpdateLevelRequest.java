@@ -1,4 +1,4 @@
-package com.dream_tournament.dto;
+package com.dream_tournament.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 
@@ -11,7 +11,4 @@ public class UpdateLevelRequest {
         return userId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 }

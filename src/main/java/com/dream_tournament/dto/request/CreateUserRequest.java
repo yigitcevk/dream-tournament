@@ -1,4 +1,4 @@
-package com.dream_tournament.dto;
+package com.dream_tournament.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 
@@ -10,10 +10,6 @@ public class CreateUserRequest {
 
     public String getUsername() {
         return this.username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
 }
