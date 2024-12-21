@@ -21,6 +21,13 @@ public class Tournament {
     @Column(nullable = false)
     private Boolean isActive;
 
+    @PrePersist
+    protected void onCreate() {
+        this.startDate = LocalDate.now();
+        this.tournamentName = "Tournament-" + this.startDate;
+        this.isActive = true;
+    }
+
     public Long getId() {
         return id;
     }
