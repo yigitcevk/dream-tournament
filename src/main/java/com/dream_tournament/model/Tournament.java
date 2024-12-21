@@ -2,32 +2,24 @@ package com.dream_tournament.model;
 
 import jakarta.persistence.*;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "tournaments")
 public class Tournament {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
     private String tournamentName;
 
-    // TODO: cascade and etc. will be discussed
-    @OneToMany(mappedBy = "activeTournament", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<User> participants = new HashSet<>();
+    @Column(nullable = false)
+    private LocalDate startDate;
 
     @Column(nullable = false)
-    private Boolean rewardsClaimed;
-
-    @PrePersist
-    protected void onCreate() {
-        this.rewardsClaimed = false;
-    }
+    private Boolean isActive;
 
     public Long getId() {
         return id;
@@ -45,30 +37,20 @@ public class Tournament {
         this.tournamentName = tournamentName;
     }
 
-    public Set<User> getParticipants() {
-        return participants;
+    public Boolean getActive() {
+        return isActive;
     }
 
-    public void setParticipants(Set<User> participants) {
-        this.participants = participants;
+    public void setActive(Boolean active) {
+        isActive = active;
     }
-
-    public Boolean getRewardsClaimed() {
-        return rewardsClaimed;
-    }
-
-    public void setRewardsClaimed(Boolean rewardsClaimed) {
-        this.rewardsClaimed = rewardsClaimed;
-    }
-
 
     @Override
     public String toString() {
         return "Tournament{" +
                 "id=" + id +
                 ", tournamentName='" + tournamentName + '\'' +
-                ", participants=" + participants +
-                ", rewardsClaimed=" + rewardsClaimed +
+                ", isActive=" + isActive +
                 '}';
     }
 }

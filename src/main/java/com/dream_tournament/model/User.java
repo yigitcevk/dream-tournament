@@ -10,7 +10,7 @@ import java.util.Random;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -25,16 +25,15 @@ public class User {
     @Column(nullable = false)
     private Integer coins;
 
-    // TODO: will be discussed
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "active_tournament_id")
-    private Tournament activeTournament;
+    @Column(nullable = false)
+    private Boolean rewardsClaimed;
 
     @PrePersist
     protected void onCreate() {
         this.level = 1;
         this.coins = 5000;
         this.country = assignRandomCountry();
+        this.rewardsClaimed = false;
     }
 
     private String assignRandomCountry() {
@@ -83,12 +82,12 @@ public class User {
         this.coins = coins;
     }
 
-    public Tournament getActiveTournament() {
-        return activeTournament;
+    public Boolean getRewardsClaimed() {
+        return rewardsClaimed;
     }
 
-    public void setActiveTournament(Tournament activeTournament) {
-        this.activeTournament = activeTournament;
+    public void setRewardsClaimed(Boolean rewardsClaimed) {
+        this.rewardsClaimed = rewardsClaimed;
     }
 
     @Override
@@ -99,7 +98,7 @@ public class User {
                 ", country='" + country + '\'' +
                 ", level=" + level +
                 ", coins=" + coins +
-                ", activeTournament=" + activeTournament +
+                ", rewardsClaimed=" + rewardsClaimed +
                 '}';
     }
 }
