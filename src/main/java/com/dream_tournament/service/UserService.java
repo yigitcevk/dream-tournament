@@ -1,9 +1,9 @@
 package com.dream_tournament.service;
 
-import com.dream_tournament.dto.CreateUserRequest;
-import com.dream_tournament.dto.CreateUserResponse;
-import com.dream_tournament.dto.UpdateLevelRequest;
-import com.dream_tournament.dto.UpdateLevelResponse;
+import com.dream_tournament.dto.request.CreateUserRequest;
+import com.dream_tournament.dto.response.CreateUserResponse;
+import com.dream_tournament.dto.request.UpdateLevelRequest;
+import com.dream_tournament.dto.response.UpdateLevelResponse;
 import com.dream_tournament.model.User;
 import com.dream_tournament.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +27,14 @@ public class UserService {
 
         User user = new User();
         user.setUsername(request.getUsername());
-
         User savedUser = userRepository.save(user);
 
-        CreateUserResponse response = new CreateUserResponse();
-        response.setId(savedUser.getId());
-        response.setCountry(savedUser.getCountry());
-        response.setLevel(savedUser.getLevel());
-        response.setCoins(savedUser.getCoins());
-        return response;
+        return new CreateUserResponse(
+                savedUser.getId(),
+                savedUser.getCountry(),
+                savedUser.getLevel(),
+                savedUser.getCoins()
+        );
     }
 
     public UpdateLevelResponse updateLevel(UpdateLevelRequest request) {
@@ -46,9 +45,9 @@ public class UserService {
         user.setCoins(user.getCoins() + 25);
         User updatedUser = userRepository.save(user);
 
-        UpdateLevelResponse response = new UpdateLevelResponse();
-        response.setLevel(updatedUser.getLevel());
-        response.setCoins(updatedUser.getCoins());
-        return response;
+        return new UpdateLevelResponse(
+                updatedUser.getLevel(),
+                updatedUser.getCoins()
+        );
     }
 }

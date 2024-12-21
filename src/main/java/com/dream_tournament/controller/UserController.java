@@ -1,9 +1,9 @@
 package com.dream_tournament.controller;
 
-import com.dream_tournament.dto.CreateUserRequest;
-import com.dream_tournament.dto.CreateUserResponse;
-import com.dream_tournament.dto.UpdateLevelRequest;
-import com.dream_tournament.dto.UpdateLevelResponse;
+import com.dream_tournament.dto.request.CreateUserRequest;
+import com.dream_tournament.dto.response.CreateUserResponse;
+import com.dream_tournament.dto.request.UpdateLevelRequest;
+import com.dream_tournament.dto.response.UpdateLevelResponse;
 import com.dream_tournament.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/user")
 @Validated
 public class UserController {
 
