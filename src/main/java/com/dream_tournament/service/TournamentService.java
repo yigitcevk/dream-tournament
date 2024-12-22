@@ -156,6 +156,18 @@ public class TournamentService {
     }
 
     public GetGroupLeaderboardResponse getGroupLeaderboard(GetGroupLeaderboardRequest request) {
+        List<GroupParticipant> participants = groupParticipantRepository.findAllByTournamentGroupId(request.getGroupId());
+
+        List<GroupLeaderboardEntry> leaderboard = new ArrayList<>();
+        for (GroupParticipant participant : participants) {
+            leaderboard.add(new GroupLeaderboardEntry(
+                    participant.getUser().getId(),
+                    participant.getUser().getUsername(),
+                    participant.getUser().getCountry(),
+                    participant.getScore()));
+        }
+
+        return new GetGroupLeaderboardResponse(leaderboard);
     }
 
     public GetCountryLeaderboardResponse getCountryLeaderboard(GetCountryLeaderboardRequest request) {
