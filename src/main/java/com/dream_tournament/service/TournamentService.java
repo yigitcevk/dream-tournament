@@ -58,7 +58,7 @@ public class TournamentService {
         user.setCoins(user.getCoins() - 1000);
         userRepository.save(user);
 
-        Tournament activeTournament = tournamentRepository.findByIsActiveTrue(Boolean.TRUE)
+        Tournament activeTournament = tournamentRepository.findByIsActiveTrue()
                 .orElseThrow(() -> new IllegalStateException("No active tournament available"));
 
         TournamentGroup group = matchUserToGroup(user, activeTournament);
