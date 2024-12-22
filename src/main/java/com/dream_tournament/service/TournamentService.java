@@ -1,5 +1,6 @@
 package com.dream_tournament.service;
 
+import com.dream_tournament.dto.CountryLeaderboardEntry;
 import com.dream_tournament.dto.GroupLeaderboardEntry;
 import com.dream_tournament.dto.request.ClaimRewardRequest;
 import com.dream_tournament.dto.request.EnterTournamentRequest;
@@ -17,8 +18,7 @@ import com.dream_tournament.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class TournamentService {
@@ -167,9 +167,31 @@ public class TournamentService {
                     participant.getScore()));
         }
 
+        leaderboard.sort((e1, e2) -> Integer.compare(e1.score(), e2.score()));
+
         return new GetGroupLeaderboardResponse(leaderboard);
     }
 
     public GetCountryLeaderboardResponse getCountryLeaderboard(GetCountryLeaderboardRequest request) {
+        List<TournamentGroup> groups = tournamentGroupRepository.findAllByTournamentId(request.getTournamentId());
+        Map<String, Integer> countryScores = new HashMap<>();
+
+        for (TournamentGroup group : groups) {
+            for (GroupParticipant participant : group.getParticipants()) {
+                String country = participant.getUser().getCountry();
+                int score = participant.getScore();
+
+                countryScores.put(country, countryScores.getOrDefault(country, 0) + score);
+            }
+        }
+
+        List<CountryLeaderboardEntry> leaderboard = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : countryScores.entrySet()) {
+            leaderboard.add(new CountryLeaderboardEntry(entry.getKey(), entry.getValue()));
+        }
+
+        leaderboard.sort((e1, e2) -> Integer.compare(e2.totalScore(), e1.totalScore()));
+
+        return new GetCountryLeaderboardResponse(leaderboard);
     }
 }
