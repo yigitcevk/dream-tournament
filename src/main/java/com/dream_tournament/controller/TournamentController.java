@@ -34,7 +34,7 @@ public class TournamentController {
     }
 
     @GetMapping("/group-rank")
-    public ResponseEntity<GetGroupRankResponse> getGroupRank(@RequestBody @Validated GetGroupLeaderboardRequest request) {
+    public ResponseEntity<GetGroupRankResponse> getGroupRank(@RequestBody @Validated GetGroupRankRequest request) {
         GetGroupRankResponse response = tournamentService.getGroupRank(request);
         return ResponseEntity.ok(response);
     }

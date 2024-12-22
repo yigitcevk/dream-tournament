@@ -2,10 +2,7 @@ package com.dream_tournament.service;
 
 import com.dream_tournament.dto.CountryLeaderboardEntry;
 import com.dream_tournament.dto.GroupLeaderboardEntry;
-import com.dream_tournament.dto.request.ClaimRewardRequest;
-import com.dream_tournament.dto.request.EnterTournamentRequest;
-import com.dream_tournament.dto.request.GetCountryLeaderboardRequest;
-import com.dream_tournament.dto.request.GetGroupLeaderboardRequest;
+import com.dream_tournament.dto.request.*;
 import com.dream_tournament.dto.response.*;
 import com.dream_tournament.model.GroupParticipant;
 import com.dream_tournament.model.Tournament;
@@ -152,7 +149,29 @@ public class TournamentService {
         );
     }
 
-    public GetGroupRankResponse getGroupRank(GetGroupLeaderboardRequest request) {
+    public GetGroupRankResponse getGroupRank(GetGroupRankRequest request) {
+        Tournament tournament = tournamentRepository.findById(request.getTournamentId())
+                .orElseThrow(() -> new IllegalArgumentException("Tournament not found"));
+
+        List<TournamentGroup> groups = tournamentGroupRepository.findAllByTournamentId(tournament.getId());
+
+        int rank = 0;
+        for (TournamentGroup group : groups) {
+            for (GroupParticipant participant : group.getParticipants()) {
+                if (participant.getUser().getId().equals(request.getUserId())) {
+                    List<GroupParticipant> participants = group.getParticipants();
+
+                    participants.sort((p1, p2) -> Integer.compare(p2.getScore(), p1.getScore()));
+
+                    for (int i = 0; i < participants.size(); i++) {
+                        if (participants.get(i).getUser().getId().equals(request.getUserId())) {
+                            rank = i + 1;
+                        }
+                    }
+                }
+            }
+        }
+        return new GetGroupRankResponse(rank);
     }
 
     public GetGroupLeaderboardResponse getGroupLeaderboard(GetGroupLeaderboardRequest request) {
