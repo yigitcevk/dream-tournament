@@ -74,6 +74,12 @@ public class TournamentService {
                     participant.getScore()
             ));
         }
+        group_leaderboard.add(new GroupLeaderboardEntry(
+                user.getId(),
+                user.getUsername(),
+                user.getCountry(),
+                0
+        ));
         return new EnterTournamentResponse(group_leaderboard);
     }
 
@@ -188,7 +194,7 @@ public class TournamentService {
                     participant.getScore()));
         }
 
-        leaderboard.sort((e1, e2) -> Integer.compare(e1.score(), e2.score()));
+        leaderboard.sort((e1, e2) -> Integer.compare(e2.score(), e1.score()));
 
         return new GetGroupLeaderboardResponse(leaderboard);
     }
