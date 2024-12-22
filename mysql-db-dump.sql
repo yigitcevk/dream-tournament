@@ -1,4 +1,4 @@
--- dump.sql
+-- Necessary MySQL database initialization and dump data file
 DROP DATABASE IF EXISTS dream_tournament;
 
 CREATE DATABASE IF NOT EXISTS dream_tournament;
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS group_participant (
     FOREIGN KEY (tournament_group_id) REFERENCES tournament_group(id)
     );
 
--- Insert example past tournaments
+-- Insert example tournaments
 INSERT INTO tournaments (tournament_name, start_date, is_active)
 VALUES
     -- Active Tournament, Tournament of the day

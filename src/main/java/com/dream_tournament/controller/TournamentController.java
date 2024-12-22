@@ -3,7 +3,6 @@ package com.dream_tournament.controller;
 import com.dream_tournament.dto.request.*;
 import com.dream_tournament.dto.response.*;
 import com.dream_tournament.service.TournamentService;
-import com.dream_tournament.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
