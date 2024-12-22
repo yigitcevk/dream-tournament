@@ -1,77 +1,77 @@
 # Dream Tournament
 
 ###
+# @name WelcomeRequest
+GET http://localhost:8080
+
+###
 # group: User Progress
 # @name CreateUserRequest
-POST {{baseUrl}}{{user}}
+POST http://localhost:8080/api/user
 Accept: application/json
 Content-Type: application/json
 
 {
-    "username" : "Yigit Cevik"
+  "username": "Yigit Cevik"
 }
 
 ###
 # group: User Progress
 # @name UpdateLevelRequest
-PUT {{baseUrl}}{{user}}/level
+PUT http://localhost:8080/api/user/level
 Content-Type: application/json
 
 {
-    "userId" : 1
+  "userId": 1
 }
 
 ###
 # group: World Cup Tournament
 # @name EnterTournamentRequest
-POST {{baseUrl}}{{tournament}}/enter
+POST http://localhost:8080/api/tournament/enter
 Content-Type: application/json
 
 {
-    "userId" : "1"
+  "userId": 1
 }
 
 ###
 # group: World Cup Tournament
 # @name ClaimRewardRequest
-PUT {{baseUrl}}{{tournament}}/claim-reward
+PUT http://localhost:8080/api/tournament/claim-reward
 Content-Type: application/json
 
 {
-    "userId" : "1"
+  "userId": 1
 }
 
 ###
 # group: World Cup Tournament
 # @name GetGroupRankRequest
-GET {{baseUrl}}{{tournament}}/group-rank
+GET http://localhost:8080/api/tournament/group-rank
 Content-Type: application/json
 
 {
-    "userId" : "1",
-    "tournamentId" : "2"
+  "userId": 1,
+  "tournamentId": 2
 }
 
 ###
 # group: World Cup Tournament
 # @name GetGroupLeaderboardRequest
-GET {{baseUrl}}{{tournament}}/group-leaderboard
+GET http://localhost:8080/api/tournament/group-leaderboard
 Content-Type: application/json
 
 {
-    "groupId" : "2"
+  "groupId": 2
 }
 
 ###
 # group: World Cup Tournament
 # @name GetCountryLeaderboardRequest
-GET {{baseUrl}}{{tournament}}
+GET http://localhost:8080/api/tournament
 Content-Type: application/json
 
 {
-    "tournamentId" : "2"
+  "tournamentId": 2
 }
-
-###
-# @name WelcomeRequest
-GET {{baseUrl}}
