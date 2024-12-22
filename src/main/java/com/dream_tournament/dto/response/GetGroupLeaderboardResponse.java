@@ -10,4 +10,8 @@ public class GetGroupLeaderboardResponse {
     public GetGroupLeaderboardResponse(List<GroupLeaderboardEntry> leaderboard) {
         this.leaderboard = leaderboard;
     }
+
+    public List<GroupLeaderboardEntry> getLeaderboard() {
+        return leaderboard;
+    }
 }

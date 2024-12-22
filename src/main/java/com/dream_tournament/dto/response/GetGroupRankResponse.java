@@ -6,4 +6,8 @@ public class GetGroupRankResponse {
     public GetGroupRankResponse(Integer rank) {
         this.rank = rank;
     }
+
+    public Integer getRank() {
+        return rank;
+    }
 }

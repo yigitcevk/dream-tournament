@@ -11,4 +11,7 @@ public class GetCountryLeaderboardResponse {
         this.leaderboard = leaderboard;
     }
 
+    public List<CountryLeaderboardEntry> getLeaderboard() {
+        return leaderboard;
+    }
 }

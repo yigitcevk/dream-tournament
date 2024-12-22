@@ -8,4 +8,12 @@ public class UpdateLevelResponse {
         this.level = level;
         this.coins = coins;
     }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public Integer getCoins() {
+        return coins;
+    }
 }

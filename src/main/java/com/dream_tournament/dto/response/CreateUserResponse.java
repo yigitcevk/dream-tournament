@@ -13,4 +13,19 @@ public class CreateUserResponse {
         this.coins = coins;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public Integer getCoins() {
+        return coins;
+    }
 }

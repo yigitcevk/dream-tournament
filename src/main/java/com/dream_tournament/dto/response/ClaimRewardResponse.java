@@ -8,4 +8,12 @@ public class ClaimRewardResponse {
         this.coins = coins;
         this.rewardsClaimed = rewardsClaimed;
     }
+
+    public Integer getCoins() {
+        return coins;
+    }
+
+    public Boolean getRewardsClaimed() {
+        return rewardsClaimed;
+    }
 }
