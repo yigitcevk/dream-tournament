@@ -1,0 +1,269 @@
+{
+	"info": {
+		"_postman_id": "7324dc40-6f03-42ef-a566-9eaa0f64320e",
+		"name": "Dream Tournament",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21448169"
+	},
+	"item": [
+		{
+			"name": "User Progress",
+			"item": [
+				{
+					"name": "CreateUserRequest",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"Yigit Cevik\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{user}}",
+							"host": [
+								"{{baseUrl}}{{user}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateLevelRequest",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{user}}/level",
+							"host": [
+								"{{baseUrl}}{{user}}"
+							],
+							"path": [
+								"level"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "World Cup Tournament",
+			"item": [
+				{
+					"name": "EnterTournamentRequest",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\" : \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{tournament}}/enter",
+							"host": [
+								"{{baseUrl}}{{tournament}}"
+							],
+							"path": [
+								"enter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ClaimRewardRequest",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\" : \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{tournament}}/claim-reward",
+							"host": [
+								"{{baseUrl}}{{tournament}}"
+							],
+							"path": [
+								"claim-reward"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetGroupRankRequest",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\" : \"1\",\r\n    \"tournamentId\" : \"2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{tournament}}/group-rank",
+							"host": [
+								"{{baseUrl}}{{tournament}}"
+							],
+							"path": [
+								"group-rank"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetGroupLeaderboardRequest",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"groupId\" : \"2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{tournament}}/group-leaderboard",
+							"host": [
+								"{{baseUrl}}{{tournament}}"
+							],
+							"path": [
+								"group-leaderboard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCountryLeaderboardRequest",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tournamentId\" : \"2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{tournament}}",
+							"host": [
+								"{{baseUrl}}{{tournament}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "WelcomeRequest",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}",
+					"host": [
+						"{{baseUrl}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "user",
+			"value": "/api/user",
+			"type": "string"
+		},
+		{
+			"key": "tournament",
+			"value": "/api/tournament",
+			"type": "string"
+		}
+	]
+}

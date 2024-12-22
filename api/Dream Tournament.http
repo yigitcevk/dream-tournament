@@ -1,0 +1,77 @@
+# Dream Tournament
+
+###
+# group: User Progress
+# @name CreateUserRequest
+POST {{baseUrl}}{{user}}
+Accept: application/json
+Content-Type: application/json
+
+{
+    "username" : "Yigit Cevik"
+}
+
+###
+# group: User Progress
+# @name UpdateLevelRequest
+PUT {{baseUrl}}{{user}}/level
+Content-Type: application/json
+
+{
+    "userId" : 1
+}
+
+###
+# group: World Cup Tournament
+# @name EnterTournamentRequest
+POST {{baseUrl}}{{tournament}}/enter
+Content-Type: application/json
+
+{
+    "userId" : "1"
+}
+
+###
+# group: World Cup Tournament
+# @name ClaimRewardRequest
+PUT {{baseUrl}}{{tournament}}/claim-reward
+Content-Type: application/json
+
+{
+    "userId" : "1"
+}
+
+###
+# group: World Cup Tournament
+# @name GetGroupRankRequest
+GET {{baseUrl}}{{tournament}}/group-rank
+Content-Type: application/json
+
+{
+    "userId" : "1",
+    "tournamentId" : "2"
+}
+
+###
+# group: World Cup Tournament
+# @name GetGroupLeaderboardRequest
+GET {{baseUrl}}{{tournament}}/group-leaderboard
+Content-Type: application/json
+
+{
+    "groupId" : "2"
+}
+
+###
+# group: World Cup Tournament
+# @name GetCountryLeaderboardRequest
+GET {{baseUrl}}{{tournament}}
+Content-Type: application/json
+
+{
+    "tournamentId" : "2"
+}
+
+###
+# @name WelcomeRequest
+GET {{baseUrl}}

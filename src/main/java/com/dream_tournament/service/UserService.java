@@ -6,11 +6,13 @@ import com.dream_tournament.dto.request.UpdateLevelRequest;
 import com.dream_tournament.dto.response.UpdateLevelResponse;
 import com.dream_tournament.model.User;
 import com.dream_tournament.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 @Service
+@Transactional
 public class UserService {
 
     private final UserRepository userRepository;
@@ -22,7 +24,7 @@ public class UserService {
 
     public CreateUserResponse createUser(CreateUserRequest request) {
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
-            throw new IllegalArgumentException("Username already exists");
+            throw new IllegalArgumentException("Username already exists: " + request.getUsername());
         }
 
         User user = new User();
@@ -39,7 +41,7 @@ public class UserService {
 
     public UpdateLevelResponse updateLevel(UpdateLevelRequest request) {
         User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                .orElseThrow(() -> new IllegalArgumentException("User not found for ID: " + request.getUserId()));
 
         user.setLevel(user.getLevel() + 1);
         user.setCoins(user.getCoins() + 25);

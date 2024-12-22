@@ -12,12 +12,14 @@ import com.dream_tournament.repository.GroupParticipantRepository;
 import com.dream_tournament.repository.TournamentGroupRepository;
 import com.dream_tournament.repository.TournamentRepository;
 import com.dream_tournament.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
+@Transactional
 public class TournamentService {
 
     private final TournamentRepository tournamentRepository;
@@ -41,18 +43,18 @@ public class TournamentService {
 
     public EnterTournamentResponse enterTournament(EnterTournamentRequest request) {
         User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + request.getUserId()));
 
         if (user.getLevel() < 20) {
-            throw new IllegalArgumentException("User must be at least level 20 to enter the tournament");
+            throw new IllegalArgumentException("User must be at least level 20 to enter the tournament, Level: " + user.getLevel());
         }
 
         if (user.getCoins() < 1000) {
-            throw new IllegalArgumentException("User does not have enough coins to enter the tournament");
+            throw new IllegalArgumentException("User does not have enough coins to enter the tournament, Coins: " + user.getCoins());
         }
 
         if (!user.getRewardsClaimed()) {
-            throw new IllegalArgumentException("User must claim previous rewards before entering a new tournament");
+            throw new IllegalArgumentException("User must claim previous rewards before entering a new tournament, Claimed: " + user.getRewardsClaimed());
         }
 
         user.setCoins(user.getCoins() - 1000);
@@ -110,7 +112,7 @@ public class TournamentService {
 
     public ClaimRewardResponse claimReward(ClaimRewardRequest request) {
         User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + request.getUserId()));
 
         TournamentGroup group = groupParticipantRepository.findByUserId(request.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("User is not part of a tournament group"));
@@ -151,7 +153,7 @@ public class TournamentService {
 
     public GetGroupRankResponse getGroupRank(GetGroupRankRequest request) {
         Tournament tournament = tournamentRepository.findById(request.getTournamentId())
-                .orElseThrow(() -> new IllegalArgumentException("Tournament not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Tournament not found, TournamentId: " + request.getTournamentId()));
 
         List<TournamentGroup> groups = tournamentGroupRepository.findAllByTournamentId(tournament.getId());
 
