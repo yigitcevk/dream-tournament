@@ -112,6 +112,44 @@ public class TournamentService {
     }
 
     public ClaimRewardResponse claimReward(ClaimRewardRequest request) {
+        User user = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        TournamentGroup group = groupParticipantRepository.findByUserId(request.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("User is not part of a tournament group"));
+
+        List<GroupParticipant> participants = groupParticipantRepository.findAllByTournamentGroupId(group.getId());
+        for (int i = 0; i < participants.size() - 1; i++) {
+            for (int j = 0; j < participants.size() - i - 1; j++) {
+                if (participants.get(j).getScore() < participants.get(j + 1).getScore()) {
+                    GroupParticipant temp = participants.get(j);
+                    participants.set(j, participants.get(j + 1));
+                    participants.set(j + 1, temp);
+                }
+            }
+        }
+
+        int rank = 0;
+        for (int i = 0; i < participants.size(); i++) {
+            if (participants.get(i).getUser().getId().equals(user.getId())) {
+                rank = i + 1;
+                break;
+            }
+        }
+
+        if (rank == 1) {
+            user.setCoins(user.getCoins() + 10000);
+        } else if (rank == 2) {
+            user.setCoins(user.getCoins() + 5000);
+        }
+
+        user.setRewardsClaimed(true);
+        userRepository.save(user);
+
+        return new ClaimRewardResponse(
+                user.getCoins(),
+                user.getRewardsClaimed()
+        );
     }
 
     public GetGroupRankResponse getGroupRank(GetGroupLeaderboardRequest request) {
