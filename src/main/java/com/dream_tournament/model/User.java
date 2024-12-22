@@ -33,7 +33,7 @@ public class User {
         this.level = 1;
         this.coins = 5000;
         this.country = assignRandomCountry();
-        this.rewardsClaimed = false;
+        this.rewardsClaimed = true;
     }
 
     private String assignRandomCountry() {
