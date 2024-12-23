@@ -9,4 +9,8 @@ public class GetCountryLeaderboardRequest {
     public Long getTournamentId() {
         return tournamentId;
     }
+
+    public void setTournamentId(long l) {
+        this.tournamentId = l;
+    }
 }

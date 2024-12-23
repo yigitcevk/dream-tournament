@@ -2,6 +2,7 @@ package com.dream_tournament.dto.response;
 
 import com.dream_tournament.dto.GroupLeaderboardEntry;
 
+import java.util.Collection;
 import java.util.List;
 
 public class EnterTournamentResponse {
@@ -12,6 +13,10 @@ public class EnterTournamentResponse {
     }
 
     public List<GroupLeaderboardEntry> getLeaderboard() {
+        return leaderboard;
+    }
+
+    public List<GroupLeaderboardEntry> getGroupLeaderboard() {
         return leaderboard;
     }
 }

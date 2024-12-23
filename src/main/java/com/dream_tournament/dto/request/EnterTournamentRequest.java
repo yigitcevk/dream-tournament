@@ -10,4 +10,7 @@ public class EnterTournamentRequest {
         return userId;
     }
 
+    public void setUserId(long l) {
+        this.userId = l;
+    }
 }

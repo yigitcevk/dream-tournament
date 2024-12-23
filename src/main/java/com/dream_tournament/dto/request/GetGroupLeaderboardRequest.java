@@ -9,4 +9,8 @@ public class GetGroupLeaderboardRequest {
     public Long getGroupId() {
         return groupId;
     }
+
+    public void setGroupId(long l) {
+        this.groupId = l;
+    }
 }

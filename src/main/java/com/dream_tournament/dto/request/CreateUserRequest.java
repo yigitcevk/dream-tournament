@@ -12,4 +12,7 @@ public class CreateUserRequest {
         return this.username;
     }
 
+    public void setUsername(String testUser) {
+        this.username = testUser;
+    }
 }

@@ -16,4 +16,12 @@ public class GetGroupRankRequest {
     public Long getTournamentId() {
         return tournamentId;
     }
+
+    public void setUserId(long l) {
+        this.userId = l;
+    }
+
+    public void setTournamentId(long l) {
+        this.tournamentId = l;
+    }
 }
