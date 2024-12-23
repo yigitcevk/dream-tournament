@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class GroupParticipant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -20,41 +20,35 @@ public class GroupParticipant {
     @Column(nullable = false)
     private int score;
 
+    public GroupParticipant() {
+    }
+
+    public GroupParticipant(Integer id, User user, TournamentGroup tournamentGroup, int score) {
+        this.id = id;
+        this.user = user;
+        this.tournamentGroup = tournamentGroup;
+        this.score = score;
+    }
+
     @PrePersist
     protected void onCreate() {
         this.score = 0;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public TournamentGroup getTournamentGroup() {
         return tournamentGroup;
     }
 
-    public void setTournamentGroup(TournamentGroup tournamentGroup) {
-        this.tournamentGroup = tournamentGroup;
-    }
-
     public int getScore() {
         return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
     }
 
     @Override

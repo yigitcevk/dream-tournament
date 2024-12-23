@@ -8,7 +8,20 @@ import java.util.Optional;
 
 @Repository
 public interface TournamentRepository extends JpaRepository<Tournament, Integer> {
+
+    /**
+     * Retrieves only active tournament if exists
+     * isActive column with true value
+     *
+     * @return an optional containing the tournament if found
+     */
     Optional<Tournament> findByIsActiveTrue();
 
-    Optional<Tournament> findById(Long tournamentId);
+    /**
+     * Retrieves the tournament associated with the given tournament ID.
+     *
+     * @param tournamentId the tournament ID
+     * @return an optional containing the tournament if found
+     */
+    Optional<Tournament> findById(Integer tournamentId);
 }

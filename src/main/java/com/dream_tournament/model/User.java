@@ -11,7 +11,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -28,6 +28,13 @@ public class User {
     @Column(nullable = false)
     private Boolean rewardsClaimed;
 
+    public User() {
+    }
+
+    public User(String username) {
+        this.username = username;
+    }
+
     @PrePersist
     protected void onCreate() {
         this.level = 1;
@@ -42,48 +49,36 @@ public class User {
         return countries.get(random.nextInt(countries.size()));
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getCountry() {
         return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 
     public Integer getLevel() {
         return level;
     }
 
-    public void setLevel(Integer level) {
-        this.level = level;
-    }
-
     public Integer getCoins() {
         return coins;
     }
 
-    public void setCoins(Integer coins) {
-        this.coins = coins;
-    }
-
     public Boolean getRewardsClaimed() {
         return rewardsClaimed;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public void setCoins(Integer coins) {
+        this.coins = coins;
     }
 
     public void setRewardsClaimed(Boolean rewardsClaimed) {

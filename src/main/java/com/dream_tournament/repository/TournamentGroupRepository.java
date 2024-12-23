@@ -8,5 +8,12 @@ import java.util.List;
 
 @Repository
 public interface TournamentGroupRepository extends JpaRepository<TournamentGroup, Integer> {
-    List<TournamentGroup> findAllByTournamentId(Long tournament_Id);
+
+    /**
+     * Retrieves all tournament groups associated with the given tournament ID.
+     *
+     * @param tournamentId the tournament ID
+     * @return a list of tournament groups
+     */
+    List<TournamentGroup> findAllByTournamentId(Integer tournamentId);
 }

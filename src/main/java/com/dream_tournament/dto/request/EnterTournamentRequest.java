@@ -4,13 +4,14 @@ import jakarta.validation.constraints.NotNull;
 
 public class EnterTournamentRequest {
     @NotNull(message = "User ID is required")
-    private Long userId;
+    private final Integer userId;
 
-    public Long getUserId() {
+    public EnterTournamentRequest(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(long l) {
-        this.userId = l;
-    }
 }

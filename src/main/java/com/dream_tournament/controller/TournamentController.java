@@ -3,7 +3,6 @@ package com.dream_tournament.controller;
 import com.dream_tournament.dto.request.*;
 import com.dream_tournament.dto.response.*;
 import com.dream_tournament.service.TournamentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +14,6 @@ public class TournamentController {
 
     private final TournamentService tournamentService;
 
-    @Autowired
     public TournamentController(TournamentService tournamentService) {
         this.tournamentService = tournamentService;
     }
@@ -32,21 +30,25 @@ public class TournamentController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/group-rank")
-    public ResponseEntity<GetGroupRankResponse> getGroupRank(@RequestBody @Validated GetGroupRankRequest request) {
-        GetGroupRankResponse response = tournamentService.getGroupRank(request);
+    @GetMapping("/group-leaderboard")
+    public ResponseEntity<GetGroupLeaderboardResponse> getGroupLeaderboard(
+            @RequestParam("tournamentId") Integer tournamentId) {
+        GetGroupLeaderboardResponse response = tournamentService.getGroupLeaderboard(new GetGroupLeaderboardRequest(tournamentId));
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/group-leaderboard")
-    public ResponseEntity<GetGroupLeaderboardResponse> getGroupLeaderboard(@RequestBody @Validated GetGroupLeaderboardRequest request) {
-        GetGroupLeaderboardResponse response = tournamentService.getGroupLeaderboard(request);
+    @GetMapping("/group-rank")
+    public ResponseEntity<GetGroupRankResponse> getGroupRank(
+            @RequestParam("tournamentId") Integer tournamentId,
+            @RequestParam("userId") Integer userId) {
+        GetGroupRankResponse response = tournamentService.getGroupRank(new GetGroupRankRequest(userId, tournamentId));
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/country-leaderboard")
-    public ResponseEntity<GetCountryLeaderboardResponse> getCountryLeaderboard(@RequestBody @Validated GetCountryLeaderboardRequest request) {
-        GetCountryLeaderboardResponse response = tournamentService.getCountryLeaderboard(request);
+    public ResponseEntity<GetCountryLeaderboardResponse> getCountryLeaderboard(
+            @RequestParam("tournamentId") Integer tournamentId) {
+        GetCountryLeaderboardResponse response = tournamentService.getCountryLeaderboard(new GetCountryLeaderboardRequest(tournamentId));
         return ResponseEntity.ok(response);
     }
 

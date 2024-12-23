@@ -10,7 +10,20 @@ import java.util.Optional;
 
 @Repository
 public interface GroupParticipantRepository extends JpaRepository<GroupParticipant, Integer> {
-    Optional<TournamentGroup> findByUserId(Long userId);
 
-    List<GroupParticipant> findAllByTournamentGroupId(Long id);
+    /**
+     * Finds the tournament group associated with the given user ID.
+     *
+     * @param userId the user ID
+     * @return an optional containing the tournament group if found
+     */
+    Optional<TournamentGroup> findByUserId(Integer userId);
+
+    /**
+     * Retrieves all group participants associated with the given tournament group ID.
+     *
+     * @param tournamentGroupId the tournament group ID
+     * @return a list of group participants
+     */
+    List<GroupParticipant> findAllByTournamentGroupId(Integer tournamentGroupId);
 }

@@ -7,6 +7,13 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Integer> {
+
+    /**
+     * Retrieves the User associated with the given unique username.
+     *
+     * @param username the tournament ID
+     * @return an optional containing User if found
+     */
     Optional<Object> findByUsername(String username);
 }

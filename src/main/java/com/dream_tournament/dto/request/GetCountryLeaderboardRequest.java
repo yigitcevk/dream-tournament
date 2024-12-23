@@ -4,13 +4,14 @@ import jakarta.validation.constraints.NotNull;
 
 public class GetCountryLeaderboardRequest {
     @NotNull(message = "Tournament ID is required")
-    private Long tournamentId;
+    private final Integer tournamentId;
 
-    public Long getTournamentId() {
+    public GetCountryLeaderboardRequest(Integer tournamentId) {
+        this.tournamentId = tournamentId;
+    }
+
+    public Integer getTournamentId() {
         return tournamentId;
     }
 
-    public void setTournamentId(long l) {
-        this.tournamentId = l;
-    }
 }

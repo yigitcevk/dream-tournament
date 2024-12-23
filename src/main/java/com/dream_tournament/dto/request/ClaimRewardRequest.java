@@ -4,13 +4,13 @@ import jakarta.validation.constraints.NotNull;
 
 public class ClaimRewardRequest {
     @NotNull(message = "User ID is required")
-    private Long userId;
+    private final Integer userId;
 
-    public Long getUserId() {
-        return userId;
+    public ClaimRewardRequest(Integer userId) {
+        this.userId = userId;
     }
 
-    public void setUserId(long l) {
-        this.userId = l;
+    public Integer getUserId() {
+        return userId;
     }
 }

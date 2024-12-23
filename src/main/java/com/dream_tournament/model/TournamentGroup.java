@@ -9,7 +9,7 @@ public class TournamentGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -18,28 +18,25 @@ public class TournamentGroup {
     @OneToMany(mappedBy = "tournamentGroup", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GroupParticipant> participants = new ArrayList<>();
 
-    public Long getId() {
-        return id;
+    public TournamentGroup() {
     }
 
-    public void setId(Long id) {
+    public TournamentGroup(Integer id, Tournament tournament, List<GroupParticipant> participants) {
         this.id = id;
+        this.tournament = tournament;
+        this.participants = participants;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public Tournament getTournament() {
         return tournament;
     }
 
-    public void setTournament(Tournament tournament) {
-        this.tournament = tournament;
-    }
-
     public List<GroupParticipant> getParticipants() {
         return participants;
-    }
-
-    public void setParticipants(List<GroupParticipant> participants) {
-        this.participants = participants;
     }
 
     @Override

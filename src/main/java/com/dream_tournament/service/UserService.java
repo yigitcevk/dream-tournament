@@ -17,18 +17,24 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Creates a new user.
+     *
+     * @param request the create user request: username
+     * @return the response containing user details: id, country, level, coins
+     */
     public CreateUserResponse createUser(CreateUserRequest request) {
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
             throw new IllegalArgumentException("Username already exists: " + request.getUsername());
         }
 
-        User user = new User();
-        user.setUsername(request.getUsername());
+        User user = new User(
+                request.getUsername()
+        );
         User savedUser = userRepository.save(user);
 
         return new CreateUserResponse(
@@ -39,6 +45,12 @@ public class UserService {
         );
     }
 
+    /**
+     * Updates the user's level and coins.
+     *
+     * @param request the update level request: userId
+     * @return the response containing updated level and coins: level, coins
+     */
     public UpdateLevelResponse updateLevel(UpdateLevelRequest request) {
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("User not found for ID: " + request.getUserId()));

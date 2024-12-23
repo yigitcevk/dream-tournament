@@ -4,13 +4,14 @@ import jakarta.validation.constraints.NotNull;
 
 public class GetGroupLeaderboardRequest {
     @NotNull(message = "Group ID is required")
-    private Long groupId;
+    private final Integer groupId;
 
-    public Long getGroupId() {
+    public GetGroupLeaderboardRequest(Integer tournamentId) {
+        this.groupId = tournamentId;
+    }
+
+    public Integer getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(long l) {
-        this.groupId = l;
-    }
 }

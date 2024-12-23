@@ -1,8 +1,8 @@
 package com.dream_tournament.dto.response;
 
 public class ClaimRewardResponse {
-    private Integer coins;
-    private Boolean rewardsClaimed;
+    private final Integer coins;
+    private final Boolean rewardsClaimed;
 
     public ClaimRewardResponse(Integer coins, Boolean rewardsClaimed) {
         this.coins = coins;

@@ -4,24 +4,21 @@ import jakarta.validation.constraints.NotNull;
 
 public class GetGroupRankRequest {
     @NotNull(message = "User ID is required")
-    private Long userId;
+    private final Integer userId;
 
     @NotNull(message = "Tournament ID is required")
-    private Long tournamentId;
+    private final Integer tournamentId;
 
-    public Long getUserId() {
+    public GetGroupRankRequest(Integer userId, Integer tournamentId) {
+        this.userId = userId;
+        this.tournamentId = tournamentId;
+    }
+
+    public Integer getUserId() {
         return userId;
     }
 
-    public Long getTournamentId() {
+    public Integer getTournamentId() {
         return tournamentId;
-    }
-
-    public void setUserId(long l) {
-        this.userId = l;
-    }
-
-    public void setTournamentId(long l) {
-        this.tournamentId = l;
     }
 }

@@ -10,7 +10,7 @@ public class Tournament {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false)
     private String tournamentName;
@@ -28,28 +28,26 @@ public class Tournament {
         this.isActive = true;
     }
 
-    public Long getId() {
-        return id;
+    public Tournament() {
     }
 
-    public void setId(Long id) {
+    public Tournament(Integer id, String tournamentName, LocalDate startDate, Boolean isActive) {
         this.id = id;
+        this.tournamentName = tournamentName;
+        this.startDate = startDate;
+        this.isActive = isActive;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public String getTournamentName() {
         return tournamentName;
     }
 
-    public void setTournamentName(String tournamentName) {
-        this.tournamentName = tournamentName;
-    }
-
     public Boolean getActive() {
         return isActive;
-    }
-
-    public void setActive(Boolean active) {
-        isActive = active;
     }
 
     @Override

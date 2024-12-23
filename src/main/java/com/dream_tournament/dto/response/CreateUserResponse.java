@@ -1,19 +1,19 @@
 package com.dream_tournament.dto.response;
 
 public class CreateUserResponse {
-    private Long id;
-    private String country;
-    private Integer level;
-    private Integer coins;
+    private final Integer id;
+    private final String country;
+    private final Integer level;
+    private final Integer coins;
 
-    public CreateUserResponse(Long id, String country, Integer level, Integer coins) {
+    public CreateUserResponse(Integer id, String country, Integer level, Integer coins) {
         this.id = id;
         this.country = country;
         this.level = level;
         this.coins = coins;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -28,4 +28,5 @@ public class CreateUserResponse {
     public Integer getCoins() {
         return coins;
     }
+
 }
