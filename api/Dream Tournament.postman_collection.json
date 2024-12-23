@@ -10,21 +10,13 @@
 			"name": "User Progress",
 			"item": [
 				{
-					"name": "CreateUserRequest",
+					"name": "CreateUserRequest 200",
 					"protocolProfileBehavior": {
-						"disabledSystemHeaders": {
-							"accept": true
-						}
+						"disabledSystemHeaders": {}
 					},
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"username\" : \"Yigit Cevik\"\r\n}",
@@ -44,13 +36,65 @@
 					"response": []
 				},
 				{
-					"name": "UpdateLevelRequest",
+					"name": "CreateUserRequest 500 Invalid User",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"Player1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{user}}",
+							"host": [
+								"{{baseUrl}}{{user}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateLevelRequest 200",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"userId\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{user}}/level",
+							"host": [
+								"{{baseUrl}}{{user}}"
+							],
+							"path": [
+								"level"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateLevelRequest 500 Invalid User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\" : 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -75,7 +119,7 @@
 			"name": "World Cup Tournament",
 			"item": [
 				{
-					"name": "EnterTournamentRequest",
+					"name": "EnterTournamentRequest 200",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -101,7 +145,111 @@
 					"response": []
 				},
 				{
-					"name": "ClaimRewardRequest",
+					"name": "EnterTournamentRequest 500 Invalid User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\" : 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{tournament}}/enter",
+							"host": [
+								"{{baseUrl}}{{tournament}}"
+							],
+							"path": [
+								"enter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EnterTournamentRequest 500 Invalid Level",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\" : 9\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{tournament}}/enter",
+							"host": [
+								"{{baseUrl}}{{tournament}}"
+							],
+							"path": [
+								"enter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EnterTournamentRequest 500 Invalid Claim State",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\" : 13\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{tournament}}/enter",
+							"host": [
+								"{{baseUrl}}{{tournament}}"
+							],
+							"path": [
+								"enter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EnterTournamentRequest 500 Invalid Coin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\" : 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{tournament}}/enter",
+							"host": [
+								"{{baseUrl}}{{tournament}}"
+							],
+							"path": [
+								"enter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ClaimRewardRequest 200",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -127,7 +275,59 @@
 					"response": []
 				},
 				{
-					"name": "GetGroupRankRequest",
+					"name": "ClaimRewardRequest 500 Invalid User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\" : 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{tournament}}/claim-reward",
+							"host": [
+								"{{baseUrl}}{{tournament}}"
+							],
+							"path": [
+								"claim-reward"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ClaimRewardRequest 500 Invalid Group Participation",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{tournament}}/claim-reward",
+							"host": [
+								"{{baseUrl}}{{tournament}}"
+							],
+							"path": [
+								"claim-reward"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetGroupRankRequest 200",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -156,7 +356,36 @@
 					"response": []
 				},
 				{
-					"name": "GetGroupLeaderboardRequest",
+					"name": "GetGroupRankRequest 500 Invalid Tournament",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\" : 1,\r\n    \"tournamentId\" : 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{tournament}}/group-rank",
+							"host": [
+								"{{baseUrl}}{{tournament}}"
+							],
+							"path": [
+								"group-rank"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetGroupLeaderboardRequest 200",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -185,7 +414,7 @@
 					"response": []
 				},
 				{
-					"name": "GetCountryLeaderboardRequest",
+					"name": "GetCountryLeaderboardRequest 200",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -202,9 +431,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}{{tournament}}",
+							"raw": "{{baseUrl}}{{tournament}}/country-leaderboard",
 							"host": [
 								"{{baseUrl}}{{tournament}}"
+							],
+							"path": [
+								"country-leaderboard"
 							]
 						}
 					},

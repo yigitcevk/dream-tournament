@@ -6,9 +6,8 @@ GET http://localhost:8080
 
 ###
 # group: User Progress
-# @name CreateUserRequest
+# @name CreateUserRequest 200
 POST http://localhost:8080/api/user
-Accept: application/json
 Content-Type: application/json
 
 {
@@ -17,7 +16,17 @@ Content-Type: application/json
 
 ###
 # group: User Progress
-# @name UpdateLevelRequest
+# @name CreateUserRequest 500 Invalid User
+POST http://localhost:8080/api/user
+Content-Type: application/json
+
+{
+  "username": "Player1"
+}
+
+###
+# group: User Progress
+# @name UpdateLevelRequest 200
 PUT http://localhost:8080/api/user/level
 Content-Type: application/json
 
@@ -26,8 +35,18 @@ Content-Type: application/json
 }
 
 ###
+# group: User Progress
+# @name UpdateLevelRequest 500 Invalid User
+PUT http://localhost:8080/api/user/level
+Content-Type: application/json
+
+{
+  "userId": 0
+}
+
+###
 # group: World Cup Tournament
-# @name EnterTournamentRequest
+# @name EnterTournamentRequest 200
 POST http://localhost:8080/api/tournament/enter
 Content-Type: application/json
 
@@ -37,7 +56,47 @@ Content-Type: application/json
 
 ###
 # group: World Cup Tournament
-# @name ClaimRewardRequest
+# @name EnterTournamentRequest 500 Invalid User
+POST http://localhost:8080/api/tournament/enter
+Content-Type: application/json
+
+{
+  "userId": 0
+}
+
+###
+# group: World Cup Tournament
+# @name EnterTournamentRequest 500 Invalid Level
+POST http://localhost:8080/api/tournament/enter
+Content-Type: application/json
+
+{
+  "userId": 9
+}
+
+###
+# group: World Cup Tournament
+# @name EnterTournamentRequest 500 Invalid Claim State
+POST http://localhost:8080/api/tournament/enter
+Content-Type: application/json
+
+{
+  "userId": 13
+}
+
+###
+# group: World Cup Tournament
+# @name EnterTournamentRequest 500 Invalid Coin
+POST http://localhost:8080/api/tournament/enter
+Content-Type: application/json
+
+{
+  "userId": 10
+}
+
+###
+# group: World Cup Tournament
+# @name ClaimRewardRequest 200
 PUT http://localhost:8080/api/tournament/claim-reward
 Content-Type: application/json
 
@@ -47,7 +106,27 @@ Content-Type: application/json
 
 ###
 # group: World Cup Tournament
-# @name GetGroupRankRequest
+# @name ClaimRewardRequest 500 Invalid User
+PUT http://localhost:8080/api/tournament/claim-reward
+Content-Type: application/json
+
+{
+  "userId": 0
+}
+
+###
+# group: World Cup Tournament
+# @name ClaimRewardRequest 500 Invalid Group Participation
+PUT http://localhost:8080/api/tournament/claim-reward
+Content-Type: application/json
+
+{
+  "userId": 1
+}
+
+###
+# group: World Cup Tournament
+# @name GetGroupRankRequest 200
 GET http://localhost:8080/api/tournament/group-rank
 Content-Type: application/json
 
@@ -58,7 +137,18 @@ Content-Type: application/json
 
 ###
 # group: World Cup Tournament
-# @name GetGroupLeaderboardRequest
+# @name GetGroupRankRequest 500 Invalid Tournament
+GET http://localhost:8080/api/tournament/group-rank
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "tournamentId": 0
+}
+
+###
+# group: World Cup Tournament
+# @name GetGroupLeaderboardRequest 200
 GET http://localhost:8080/api/tournament/group-leaderboard
 Content-Type: application/json
 
@@ -68,8 +158,8 @@ Content-Type: application/json
 
 ###
 # group: World Cup Tournament
-# @name GetCountryLeaderboardRequest
-GET http://localhost:8080/api/tournament
+# @name GetCountryLeaderboardRequest 200
+GET http://localhost:8080/api/tournament/country-leaderboard
 Content-Type: application/json
 
 {
