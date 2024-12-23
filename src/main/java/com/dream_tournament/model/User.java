@@ -25,8 +25,8 @@ public class User {
     @Column(nullable = false)
     private Integer coins;
 
-    @Column(nullable = false)
-    private Boolean rewardsClaimed;
+    @Column(name = "active_tournament", nullable = false)
+    private Boolean activeTournament;
 
     public User() {
     }
@@ -40,7 +40,7 @@ public class User {
         this.level = 1;
         this.coins = 5000;
         this.country = assignRandomCountry();
-        this.rewardsClaimed = true;
+        this.activeTournament = false;
     }
 
     private String assignRandomCountry() {
@@ -69,8 +69,8 @@ public class User {
         return coins;
     }
 
-    public Boolean getRewardsClaimed() {
-        return rewardsClaimed;
+    public Boolean getActiveTournament() {
+        return activeTournament;
     }
 
     public void setLevel(Integer level) {
@@ -81,8 +81,8 @@ public class User {
         this.coins = coins;
     }
 
-    public void setRewardsClaimed(Boolean rewardsClaimed) {
-        this.rewardsClaimed = rewardsClaimed;
+    public void setActiveTournament(Boolean activeTournament) {
+        this.activeTournament = activeTournament;
     }
 
     @Override
@@ -93,7 +93,7 @@ public class User {
                 ", country='" + country + '\'' +
                 ", level=" + level +
                 ", coins=" + coins +
-                ", rewardsClaimed=" + rewardsClaimed +
+                ", activeTournament=" + activeTournament +
                 '}';
     }
 }

@@ -15,5 +15,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
      * @param username the tournament ID
      * @return an optional containing User if found
      */
-    Optional<Object> findByUsername(String username);
+    Optional<User> findByUsername(String username);
 }

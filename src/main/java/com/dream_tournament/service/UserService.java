@@ -4,10 +4,15 @@ import com.dream_tournament.dto.request.CreateUserRequest;
 import com.dream_tournament.dto.response.CreateUserResponse;
 import com.dream_tournament.dto.request.UpdateLevelRequest;
 import com.dream_tournament.dto.response.UpdateLevelResponse;
+import com.dream_tournament.model.GroupParticipant;
+import com.dream_tournament.model.Tournament;
+import com.dream_tournament.model.TournamentGroup;
 import com.dream_tournament.model.User;
+import com.dream_tournament.repository.GroupParticipantRepository;
+import com.dream_tournament.repository.TournamentGroupRepository;
+import com.dream_tournament.repository.TournamentRepository;
 import com.dream_tournament.repository.UserRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -15,10 +20,26 @@ import org.springframework.stereotype.Service;
 @Transactional
 public class UserService {
 
-    private final UserRepository userRepository;
+    public static final int LEVEL_UP_PRIZE = 25;
+    public static final int LEVEL_UP = 1;
+    public static final int SCORE_UP = 1;
 
-    public UserService(UserRepository userRepository) {
+    private final UserRepository userRepository;
+    private final GroupParticipantRepository groupParticipantRepository;
+    private final TournamentRepository tournamentRepository;
+    private final TournamentGroupRepository tournamentGroupRepository;
+
+
+    public UserService(
+            UserRepository userRepository,
+            GroupParticipantRepository groupParticipantRepository,
+            TournamentRepository tournamentRepository,
+            TournamentGroupRepository tournamentGroupRepository
+    ) {
         this.userRepository = userRepository;
+        this.groupParticipantRepository = groupParticipantRepository;
+        this.tournamentRepository = tournamentRepository;
+        this.tournamentGroupRepository = tournamentGroupRepository;
     }
 
     /**
@@ -55,9 +76,18 @@ public class UserService {
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("User not found for ID: " + request.getUserId()));
 
-        user.setLevel(user.getLevel() + 1);
-        user.setCoins(user.getCoins() + 25);
+        user.setLevel(user.getLevel() + LEVEL_UP);
+        user.setCoins(user.getCoins() + LEVEL_UP_PRIZE);
         User updatedUser = userRepository.save(user);
+
+        if (user.getActiveTournament()) {
+            Tournament activeTournament = tournamentRepository.findByIsActiveTrue();
+            TournamentGroup tournamentGroup = tournamentGroupRepository.findByTournament(activeTournament);
+            GroupParticipant groupParticipant = groupParticipantRepository.findByUserAndTournamentGroup(user, tournamentGroup);
+
+            groupParticipant.setScore(groupParticipant.getScore() + SCORE_UP);
+            groupParticipantRepository.save(groupParticipant);
+        }
 
         return new UpdateLevelResponse(
                 updatedUser.getLevel(),
