@@ -59,7 +59,7 @@ VALUES
     ('Player8', 'United States', 38, 17000, TRUE),
     -- Ineligible players (low level or insufficient coins)
     ('Player9', 'Germany', 19, 9000, TRUE),
-    ('Player10', 'Turkey', 18, 4000, TRUE),
+    ('Player10', 'Turkey', 22, 4000, TRUE),
     ('Player11', 'France', 2, 6000, TRUE),
     -- Players with unclaimed rewards
     ('Player12', 'United States', 30, 8000, FALSE),
