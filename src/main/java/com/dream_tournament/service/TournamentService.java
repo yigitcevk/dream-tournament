@@ -22,6 +22,7 @@ import java.util.*;
 public class TournamentService {
 
     private final int MIN_TOURNAMENT_LEVEL = 20;
+    private final int MIN_TOURNAMENT_REQUIRED_COIN = 5000;
     private final int TOURNAMENT_ENTRY_FEE = 1000;
     private final int START_SCORE = 0;
     private final int FIRST_PLACE_REWARD = 10000;
@@ -58,7 +59,7 @@ public class TournamentService {
             throw new IllegalArgumentException("User must be at least level 20 to enter the tournament, Level: " + user.getLevel());
         }
 
-        if (user.getCoins() < TOURNAMENT_ENTRY_FEE) {
+        if (user.getCoins() < MIN_TOURNAMENT_REQUIRED_COIN) {
             throw new IllegalArgumentException("User does not have enough coins to enter the tournament, Coins: " + user.getCoins());
         }
         if (user.getActiveTournament()) {
@@ -185,6 +186,9 @@ public class TournamentService {
 
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + request.getUserId()));
+        if (!user.getActiveTournament()) {
+            throw new IllegalStateException("Reward is already claimed");
+        }
 
         if (rank == 1) {
             user.setCoins(user.getCoins() + FIRST_PLACE_REWARD);
