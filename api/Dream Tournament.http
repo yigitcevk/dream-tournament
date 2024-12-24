@@ -1,10 +1,6 @@
 # Dream Tournament
 
 ###
-# @name WelcomeRequest
-GET http://localhost:8080
-
-###
 # group: User Progress
 # @name CreateUserRequest 200
 POST http://localhost:8080/api/user
@@ -76,16 +72,6 @@ Content-Type: application/json
 
 ###
 # group: World Cup Tournament
-# @name EnterTournamentRequest 500 Invalid Claim State
-POST http://localhost:8080/api/tournament/enter
-Content-Type: application/json
-
-{
-  "userId": 13
-}
-
-###
-# group: World Cup Tournament
 # @name EnterTournamentRequest 500 Invalid Coin
 POST http://localhost:8080/api/tournament/enter
 Content-Type: application/json
@@ -116,52 +102,30 @@ Content-Type: application/json
 
 ###
 # group: World Cup Tournament
-# @name ClaimRewardRequest 500 Invalid Group Participation
-PUT http://localhost:8080/api/tournament/claim-reward
-Content-Type: application/json
-
-{
-  "userId": 1
-}
-
-###
-# group: World Cup Tournament
 # @name GetGroupRankRequest 200
-GET http://localhost:8080/api/tournament/group-rank
-Content-Type: application/json
-
-{
-  "userId": 1,
-  "tournamentId": 2
-}
+GET http://localhost:8080/api/tournament/group-rank?
+    userId=1&
+    tournamentId=2
 
 ###
 # group: World Cup Tournament
 # @name GetGroupRankRequest 500 Invalid Tournament
-GET http://localhost:8080/api/tournament/group-rank
-Content-Type: application/json
-
-{
-  "userId": 1,
-  "tournamentId": 0
-}
+GET http://localhost:8080/api/tournament/group-rank?
+    userId=1&
+    tournamentId=0
 
 ###
 # group: World Cup Tournament
 # @name GetGroupLeaderboardRequest 200
-GET http://localhost:8080/api/tournament/group-leaderboard
-Content-Type: application/json
-
-{
-  "groupId": 2
-}
+GET http://localhost:8080/api/tournament/group-leaderboard?
+    groupId=2
 
 ###
 # group: World Cup Tournament
 # @name GetCountryLeaderboardRequest 200
-GET http://localhost:8080/api/tournament/country-leaderboard
-Content-Type: application/json
+GET http://localhost:8080/api/tournament/country-leaderboard?
+    tournamentId=2
 
-{
-  "tournamentId": 2
-}
+###
+# @name WelcomeRequest
+GET http://localhost:8080

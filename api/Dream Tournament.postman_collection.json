@@ -197,32 +197,6 @@
 					"response": []
 				},
 				{
-					"name": "EnterTournamentRequest 500 Invalid Claim State",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"userId\" : 13\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}{{tournament}}/enter",
-							"host": [
-								"{{baseUrl}}{{tournament}}"
-							],
-							"path": [
-								"enter"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "EnterTournamentRequest 500 Invalid Coin",
 					"request": {
 						"method": "POST",
@@ -301,55 +275,27 @@
 					"response": []
 				},
 				{
-					"name": "ClaimRewardRequest 500 Invalid Group Participation",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"userId\" : 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}{{tournament}}/claim-reward",
-							"host": [
-								"{{baseUrl}}{{tournament}}"
-							],
-							"path": [
-								"claim-reward"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "GetGroupRankRequest 200",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"userId\" : 1,\r\n    \"tournamentId\" : 2\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{baseUrl}}{{tournament}}/group-rank",
+							"raw": "{{baseUrl}}{{tournament}}/group-rank?userId=1&tournamentId=2",
 							"host": [
 								"{{baseUrl}}{{tournament}}"
 							],
 							"path": [
 								"group-rank"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "1"
+								},
+								{
+									"key": "tournamentId",
+									"value": "2"
+								}
 							]
 						}
 					},
@@ -357,28 +303,26 @@
 				},
 				{
 					"name": "GetGroupRankRequest 500 Invalid Tournament",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"userId\" : 1,\r\n    \"tournamentId\" : 0\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{baseUrl}}{{tournament}}/group-rank",
+							"raw": "{{baseUrl}}{{tournament}}/group-rank?userId=1&tournamentId=0",
 							"host": [
 								"{{baseUrl}}{{tournament}}"
 							],
 							"path": [
 								"group-rank"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "1"
+								},
+								{
+									"key": "tournamentId",
+									"value": "0"
+								}
 							]
 						}
 					},
@@ -386,28 +330,22 @@
 				},
 				{
 					"name": "GetGroupLeaderboardRequest 200",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"groupId\" : 2\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{baseUrl}}{{tournament}}/group-leaderboard",
+							"raw": "{{baseUrl}}{{tournament}}/group-leaderboard?groupId=2",
 							"host": [
 								"{{baseUrl}}{{tournament}}"
 							],
 							"path": [
 								"group-leaderboard"
+							],
+							"query": [
+								{
+									"key": "groupId",
+									"value": "2"
+								}
 							]
 						}
 					},
@@ -415,28 +353,22 @@
 				},
 				{
 					"name": "GetCountryLeaderboardRequest 200",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"tournamentId\" : 2\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{baseUrl}}{{tournament}}/country-leaderboard",
+							"raw": "{{baseUrl}}{{tournament}}/country-leaderboard?tournamentId=2",
 							"host": [
 								"{{baseUrl}}{{tournament}}"
 							],
 							"path": [
 								"country-leaderboard"
+							],
+							"query": [
+								{
+									"key": "tournamentId",
+									"value": "2"
+								}
 							]
 						}
 					},
