@@ -40,8 +40,9 @@ CREATE TABLE IF NOT EXISTS group_participant (
 -- Insert example tournaments
 INSERT INTO tournaments (tournament_name, start_date, is_active, latest)
 VALUES
+    -- Active Tournament
+    ('Tournament-2024-12-24', '2024-12-24', TRUE, TRUE),
     -- Old Tournaments
-    ('Tournament-2024-12-22', '2024-12-23', FALSE, TRUE),
     ('Tournament-2024-12-01', '2024-12-01', FALSE, FALSE),
     ('Tournament-2024-12-15', '2024-12-15', FALSE, FALSE);
 

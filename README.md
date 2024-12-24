@@ -89,6 +89,17 @@ Postman: Pre-configured collection under api directory for API testing.(Dream To
 Implementation of data transfer objects can give the detailed 
 view of request and response classes.
 
+Because of the schedulers time selection, an example sql injection is needed so I added to the db-dump initialization.
+```bash
+INSERT INTO tournaments (tournament_name, start_date, is_active, latest)
+
+VALUES
+
+('Tournament-2024-12-24', '2024-12-43', TRUE, TRUE);
+```
+
+Tester could enter tournament with multiple requests and claim try to see leaderboards & claim rewards.
+
 -> package com.dream_tournament.dto.*
 
 ## Database Design
