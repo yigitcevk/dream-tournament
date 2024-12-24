@@ -96,4 +96,8 @@ public class User {
                 ", activeTournament=" + activeTournament +
                 '}';
     }
+
+    public void setId(int i) {
+        this.id = i;
+    }
 }

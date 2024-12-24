@@ -35,13 +35,6 @@ public class Tournament {
     public Tournament() {
     }
 
-    public Tournament(Integer id, String tournamentName, LocalDate startDate, Boolean isActive) {
-        this.id = id;
-        this.tournamentName = tournamentName;
-        this.startDate = startDate;
-        this.isActive = isActive;
-    }
-
     public Integer getId() {
         return id;
     }
