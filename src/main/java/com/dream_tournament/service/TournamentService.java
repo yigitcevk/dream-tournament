@@ -13,7 +13,6 @@ import com.dream_tournament.repository.TournamentGroupRepository;
 import com.dream_tournament.repository.TournamentRepository;
 import com.dream_tournament.repository.UserRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -22,12 +21,17 @@ import java.util.*;
 @Transactional
 public class TournamentService {
 
+    private final int MIN_TOURNAMENT_LEVEL = 20;
+    private final int TOURNAMENT_ENTRY_FEE = 1000;
+    private final int START_SCORE = 0;
+    private final int FIRST_PLACE_REWARD = 10000;
+    private final int SECOND_PLACE_REWARD = 5000;
+
     private final TournamentRepository tournamentRepository;
     private final UserRepository userRepository;
     private final GroupParticipantRepository groupParticipantRepository;
     private final TournamentGroupRepository tournamentGroupRepository;
 
-    @Autowired
     public TournamentService(
             TournamentRepository tournamentRepository,
             UserRepository userRepository,
@@ -40,31 +44,49 @@ public class TournamentService {
         this.tournamentGroupRepository = tournamentGroupRepository;
     }
 
-
+    /**
+     * Enter to the active tournament.
+     *
+     * @param request userId
+     * @return List<GroupLeaderboardEntry>
+     */
     public EnterTournamentResponse enterTournament(EnterTournamentRequest request) {
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + request.getUserId()));
 
-        if (user.getLevel() < 20) {
+        if (user.getLevel() < MIN_TOURNAMENT_LEVEL) {
             throw new IllegalArgumentException("User must be at least level 20 to enter the tournament, Level: " + user.getLevel());
         }
 
-        if (user.getCoins() < 1000) {
+        if (user.getCoins() < TOURNAMENT_ENTRY_FEE) {
             throw new IllegalArgumentException("User does not have enough coins to enter the tournament, Coins: " + user.getCoins());
         }
-
-        if (!user.getRewardsClaimed()) {
-            throw new IllegalArgumentException("User must claim previous rewards before entering a new tournament, Claimed: " + user.getRewardsClaimed());
+        if (user.getActiveTournament()) {
+            throw new IllegalArgumentException("User must claim previous rewards before entering a new tournament, Claimed: " + user.getActiveTournament());
         }
 
-        user.setCoins(user.getCoins() - 1000);
+        user.setCoins(user.getCoins() - TOURNAMENT_ENTRY_FEE);
         userRepository.save(user);
 
-        Tournament activeTournament = tournamentRepository.findByIsActiveTrue()
-                .orElseThrow(() -> new IllegalStateException("No active tournament available"));
+        Tournament activeTournament = tournamentRepository.findByIsActiveTrue();
+        if (activeTournament == null) {
+            throw new IllegalStateException("No active tournament available");
+        }
 
         TournamentGroup group = matchUserToGroup(user, activeTournament);
 
+        List<GroupLeaderboardEntry> group_leaderboard = getGroupLeaderboardEntries(group, user);
+        return new EnterTournamentResponse(group_leaderboard);
+    }
+
+    /**
+     * Get all group participants in leaderboard
+     *
+     * @param user the user entity
+     * @param group the tournament group entity
+     * @return List<GroupLeaderboardEntry>
+     */
+    private List<GroupLeaderboardEntry> getGroupLeaderboardEntries(TournamentGroup group, User user) {
         List<GroupLeaderboardEntry> group_leaderboard = new ArrayList<>();
         for (GroupParticipant participant : group.getParticipants()) {
             group_leaderboard.add(new GroupLeaderboardEntry(
@@ -78,85 +100,113 @@ public class TournamentService {
                 user.getId(),
                 user.getUsername(),
                 user.getCountry(),
-                0
+                START_SCORE
         ));
-        return new EnterTournamentResponse(group_leaderboard);
+        return group_leaderboard;
     }
 
+    /**
+     * Match user to available group or create a new one
+     *
+     * @param user the user entity
+     * @param tournament the tournament entity
+     * @return List<TournamentGroup>
+     */
     private TournamentGroup matchUserToGroup(User user, Tournament tournament) {
         List<TournamentGroup> groups = tournamentGroupRepository.findAllByTournamentId((tournament.getId()));
 
         for (TournamentGroup group : groups) {
             boolean sameCountry = false;
+            int group_size = 0;
             for (GroupParticipant participant : group.getParticipants()) {
+                group_size++;
                 if (participant.getUser().getCountry().equals(user.getCountry())) {
                     sameCountry = true;
                     break;
                 }
             }
 
-            if (!sameCountry) {
-                GroupParticipant participant = new GroupParticipant();
-                participant.setUser(user);
-                participant.setTournamentGroup(group);
+            if (!sameCountry && group_size < 5) {
+                GroupParticipant participant = new GroupParticipant(
+                        user,
+                        group
+                );
                 groupParticipantRepository.save(participant);
+                group_size++;
+                if (group_size == 5) {
+                    for (GroupParticipant p : group.getParticipants()) {
+                        p.getUser().setActiveTournament(true);
+                        userRepository.save(p.getUser());
+                    }
+                    user.setActiveTournament(true);
+                    userRepository.save(user);
+                }
                 return group;
             }
+
         }
 
-        TournamentGroup newGroup = new TournamentGroup();
-        newGroup.setTournament(tournament);
+        TournamentGroup newGroup = new TournamentGroup(
+                tournament
+        );
         tournamentGroupRepository.save(newGroup);
 
-        GroupParticipant participant = new GroupParticipant();
-        participant.setUser(user);
-        participant.setTournamentGroup(newGroup);
+        GroupParticipant participant = new GroupParticipant(
+                user,
+                newGroup
+        );
         groupParticipantRepository.save(participant);
 
         return newGroup;
     }
 
+    /**
+     * Claim rewards for given userId.
+     *
+     * @param request userId
+     * @return coin, rewardsClaimed
+     */
     public ClaimRewardResponse claimReward(ClaimRewardRequest request) {
+        Tournament activeTournament = tournamentRepository.findByIsActiveTrue();
+        if (activeTournament != null) {
+            throw new IllegalStateException("Please wait for the tournament to end");
+        }
+
+        Tournament latestTournament = tournamentRepository.findByLatestTrue();
+        if (latestTournament == null) {
+            throw new IllegalStateException("Latest tournament not found");
+        }
+
+        GetGroupRankResponse groupRankResponse = getGroupRank(new GetGroupRankRequest(
+                request.getUserId(),
+                latestTournament.getId()
+        ));
+        int rank = groupRankResponse.getRank();
+
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + request.getUserId()));
 
-        TournamentGroup group = groupParticipantRepository.findByUserId(request.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("User is not part of a tournament group"));
-
-        List<GroupParticipant> participants = groupParticipantRepository.findAllByTournamentGroupId(group.getId());
-        for (int i = 0; i < participants.size() - 1; i++) {
-            for (int j = 0; j < participants.size() - i - 1; j++) {
-                if (participants.get(j).getScore() < participants.get(j + 1).getScore()) {
-                    GroupParticipant temp = participants.get(j);
-                    participants.set(j, participants.get(j + 1));
-                    participants.set(j + 1, temp);
-                }
-            }
-        }
-
-        int rank = 0;
-        for (int i = 0; i < participants.size(); i++) {
-            if (participants.get(i).getUser().getId().equals(user.getId())) {
-                rank = i + 1;
-                break;
-            }
-        }
-
         if (rank == 1) {
-            user.setCoins(user.getCoins() + 10000);
+            user.setCoins(user.getCoins() + FIRST_PLACE_REWARD);
         } else if (rank == 2) {
-            user.setCoins(user.getCoins() + 5000);
+            user.setCoins(user.getCoins() + SECOND_PLACE_REWARD);
         }
 
-        user.setRewardsClaimed(true);
+        user.setActiveTournament(false);
         userRepository.save(user);
 
         return new ClaimRewardResponse(
                 user.getCoins(),
-                user.getRewardsClaimed()
+                true
         );
     }
 
+    /**
+     * Get group rank for any tournament for given userId and tournamentId
+     *
+     * @param request userId, tournamentId
+     * @return rank
+     */
     public GetGroupRankResponse getGroupRank(GetGroupRankRequest request) {
         Tournament tournament = tournamentRepository.findById(request.getTournamentId())
                 .orElseThrow(() -> new IllegalArgumentException("Tournament not found, TournamentId: " + request.getTournamentId()));
@@ -182,6 +232,12 @@ public class TournamentService {
         return new GetGroupRankResponse(rank);
     }
 
+    /**
+     * Get Group Leaderboard
+     *
+     * @param request groupId
+     * @return List<GroupLeaderboardEntry>
+     */
     public GetGroupLeaderboardResponse getGroupLeaderboard(GetGroupLeaderboardRequest request) {
         List<GroupParticipant> participants = groupParticipantRepository.findAllByTournamentGroupId(request.getGroupId());
 
@@ -199,6 +255,12 @@ public class TournamentService {
         return new GetGroupLeaderboardResponse(leaderboard);
     }
 
+    /**
+     * Get Country Leaderboard
+     *
+     * @param request tournamentId
+     * @return List<CountryLeaderboardEntry>
+     */
     public GetCountryLeaderboardResponse getCountryLeaderboard(GetCountryLeaderboardRequest request) {
         List<TournamentGroup> groups = tournamentGroupRepository.findAllByTournamentId(request.getTournamentId());
         Map<String, Integer> countryScores = new HashMap<>();

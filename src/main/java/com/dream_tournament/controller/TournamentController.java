@@ -32,8 +32,8 @@ public class TournamentController {
 
     @GetMapping("/group-leaderboard")
     public ResponseEntity<GetGroupLeaderboardResponse> getGroupLeaderboard(
-            @RequestParam("tournamentId") Integer tournamentId) {
-        GetGroupLeaderboardResponse response = tournamentService.getGroupLeaderboard(new GetGroupLeaderboardRequest(tournamentId));
+            @RequestParam("groupId") Integer groupId) {
+        GetGroupLeaderboardResponse response = tournamentService.getGroupLeaderboard(new GetGroupLeaderboardRequest(groupId));
         return ResponseEntity.ok(response);
     }
 

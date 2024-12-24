@@ -82,7 +82,7 @@ public class UserService {
 
         if (user.getActiveTournament()) {
             Tournament activeTournament = tournamentRepository.findByIsActiveTrue();
-            TournamentGroup tournamentGroup = tournamentGroupRepository.findByTournament(activeTournament);
+            TournamentGroup tournamentGroup = tournamentGroupRepository.findByUserIdAndTournamentId(updatedUser.getId(), activeTournament.getId());
             GroupParticipant groupParticipant = groupParticipantRepository.findByUserAndTournamentGroup(user, tournamentGroup);
 
             groupParticipant.setScore(groupParticipant.getScore() + SCORE_UP);

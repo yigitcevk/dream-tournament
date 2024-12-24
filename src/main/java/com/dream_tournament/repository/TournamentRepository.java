@@ -15,7 +15,7 @@ public interface TournamentRepository extends JpaRepository<Tournament, Integer>
      *
      * @return an optional containing the tournament if found
      */
-    Optional<Tournament> findByIsActiveTrue();
+    Tournament findByIsActiveTrue();
 
     /**
      * Retrieves the tournament associated with the given tournament ID.
@@ -24,4 +24,12 @@ public interface TournamentRepository extends JpaRepository<Tournament, Integer>
      * @return an optional containing the tournament if found
      */
     Optional<Tournament> findById(Integer tournamentId);
+
+    /**
+     * Retrieves latest tournament
+     * latest column with true value
+     *
+     * @return an optional containing the tournament if found
+     */
+    Tournament findByLatestTrue();
 }

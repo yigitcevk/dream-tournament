@@ -23,11 +23,9 @@ public class GroupParticipant {
     public GroupParticipant() {
     }
 
-    public GroupParticipant(Integer id, User user, TournamentGroup tournamentGroup, int score) {
-        this.id = id;
+    public GroupParticipant(User user, TournamentGroup tournamentGroup) {
         this.user = user;
         this.tournamentGroup = tournamentGroup;
-        this.score = score;
     }
 
     @PrePersist
@@ -49,6 +47,10 @@ public class GroupParticipant {
 
     public int getScore() {
         return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     @Override

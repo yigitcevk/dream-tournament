@@ -21,10 +21,8 @@ public class TournamentGroup {
     public TournamentGroup() {
     }
 
-    public TournamentGroup(Integer id, Tournament tournament, List<GroupParticipant> participants) {
-        this.id = id;
+    public TournamentGroup(Tournament tournament) {
         this.tournament = tournament;
-        this.participants = participants;
     }
 
     public Integer getId() {

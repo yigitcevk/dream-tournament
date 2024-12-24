@@ -21,11 +21,15 @@ public class Tournament {
     @Column(nullable = false)
     private Boolean isActive;
 
+    @Column(nullable = false)
+    private Boolean latest;
+
     @PrePersist
     protected void onCreate() {
         this.startDate = LocalDate.now();
         this.tournamentName = "Tournament-" + this.startDate;
         this.isActive = true;
+        this.latest = true;
     }
 
     public Tournament() {
@@ -48,6 +52,18 @@ public class Tournament {
 
     public Boolean getActive() {
         return isActive;
+    }
+
+    public Boolean getLatest() {
+        return latest;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public void setLatest(Boolean latest) {
+        this.latest = latest;
     }
 
     @Override
