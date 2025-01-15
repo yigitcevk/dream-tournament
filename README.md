@@ -1,6 +1,6 @@
 # Tournament
 
-Dream Tournament is a Java-based application designed to manage and simulate 
+Tournament is a Java-based application designed to manage and simulate 
 tournaments. It provides Rest API to maintain users progress, functionalities 
 for creating tournaments, managing participants and tracking results.
 
